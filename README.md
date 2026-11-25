@@ -111,3 +111,117 @@ O relatório e as evidências ficam em `docs/`. ChatGPT foi utilizado no planeja
 ## Licença
 
 MIT — consulte [LICENSE](LICENSE).
+
+
+## Tutorial de execução
+
+### 1. Pré-requisitos
+
+Antes de executar o projeto, certifique-se de possuir:
+
+- Git;
+- Node.js 22.x;
+- npm (incluído na instalação do Node.js);
+- Um navegador web atualizado;
+- Um editor de código, preferencialmente VS Code.
+
+Verifique as instalações pelo terminal:
+
+```bash
+git --version
+node -v
+npm -v
+```
+
+### 2. Clonar o repositório
+
+Abra o terminal e execute:
+
+```bash
+git clone https://github.com/MatheusOliveiraCosta/Gerencia-de-conf-e-manutencao-de-software.git
+```
+
+Acesse a pasta do projeto:
+
+```bash
+cd Gerencia-de-conf-e-manutencao-de-software
+```
+
+### 3. Instalar as dependências
+
+Execute:
+
+```bash
+npm ci
+```
+
+Esse comando instala as dependências conforme as versões
+definidas no package-lock.json, garantindo a consistência
+do ambiente de desenvolvimento.
+
+### 4. Iniciar a aplicação
+
+Execute:
+
+```bash
+npm run dev
+```
+
+Após iniciar o servidor, acesse:
+
+http://localhost:3000
+
+Mantenha o terminal aberto enquanto estiver utilizando
+a aplicação.
+
+Para encerrar o servidor, pressione Ctrl+C.
+
+### 5. Configuração do banco de dados
+
+O projeto utiliza Supabase Auth e PostgreSQL para
+autenticação e persistência das refeições.
+
+A configuração pública do Supabase já está presente
+no código da aplicação.
+
+Para utilizar uma instância própria, consulte:
+
+- [Instruções do Supabase](supabase/README.md)
+- [Script de criação do banco](supabase/schema.sql)
+
+Nunca exponha chaves privadas ou tokens de publicação.
+
+### 6. Executar os testes automatizados
+
+Execute:
+
+```bash
+npm test
+```
+
+Resultado esperado:
+
+- 5 testes unitários aprovados;
+- 3 testes de integração aprovados;
+- 8 testes aprovados no total;
+- 0 falhas.
+
+### 7. Gerar o build de produção
+
+Execute:
+
+```bash
+npm run build
+```
+
+Os arquivos construídos serão disponibilizados
+no diretório dist/.
+
+### 8. Acesso sem instalação
+
+Também é possível utilizar a aplicação diretamente
+pela versão publicada na Vercel:
+
+https://dietlife-xi.vercel.app/
+
+Nesse caso, não é necessário instalar nenhuma ferramenta.
