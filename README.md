@@ -212,23 +212,9 @@ Sou Nelson e minha tarefa no DietLife é simples: documentação e evidências, 
 4. Reverta somente o commit de regressão (`git revert SHA_DA_REGRESSAO`), integre a correção e capture a nova execução aprovada e a publicação da versão corrigida. Se proteção de branch impedir a regressão na main, use a branch/ambiente de demonstração, não desative a proteção só para criar evidência. Registre a configuração usada e a causalidade.
 5. Confira `/version.json` na publicação e compare com o SHA validado pelo pipeline. Salve links e prints no relatório. Não declare êxito de uma execução que não ocorreu.
 
-## 7. Cronograma sugerido para concluir até 21h30
-
-Horários são metas internas, não resultados já obtidos. Trabalhar em paralelo. Se começarem mais tarde, comprimam etapas sem eliminar testes, evidências e PDF.
-
-| Horário (25/11) | Entrega esperada |
-|---|---|
-| Até 15h00 | Repositório, branches, acesso, aprovação da ideia, todos rodando a base |
-| 15h00–17h00 | Alexandre e Camille nas funcionalidades; Matheus Costa nos testes (15h–15h40) e CI/CD (15h40–17h); Nelson organiza modelo e testes manuais |
-| 17h00–18h15 | Integrar PRs, revisar autenticação, validar app local, resolver conflitos |
-| 18h15–19h15 | Vercel, execução verde, artefato e publicação |
-| 19h15–20h00 | Falha controlada, bloqueio e recuperação; capturar evidências |
-| 20h00–21h00 | Concluir PDF, README, links, testes finais e revisão |
-| 21h00–21h30 | Margem para problemas, enviar no Moodle e preparar demonstração |
-
 **Corte de escopo:** se autenticação remota não estiver estável até 18h15, use modo local explicitamente rotulado, registre a limitação e priorize CI/CD. A aplicação mínima já permite cadastro/consulta. A professora recomenda armazenamento local, mas o login é um requisito adicional escolhido pela equipe, portanto não o declare cumprido se não estiver pronto.
 
-## 8. Pipeline e links (preencher após execução)
+## 7. Pipeline e links (preencher após execução)
 
 - CI: `npm ci` → `npm run build` → `npm test` → artefato (planejado).
 - CD: job dependente da CI aprovada, preparo do pacote Vercel e publicação controlada na main (planejado).
@@ -241,11 +227,11 @@ Horários são metas internas, não resultados já obtidos. Trabalhar em paralel
 - SHA publicado: PENDENTE.
 - Documento técnico PDF: PENDENTE.
 
-## 9. Limitações conhecidas da base
+## 8. Limitações conhecidas da base
 
 Não existe autenticação real, não há banco remoto conectado, edição/exclusão ainda não estão disponíveis na interface, existe apenas um teste inicial, não há workflow executável nem publicação confirmada. Os dados de demonstração são locais ao navegador e podem ser apagados pelo usuário. A API valida dados, não grava registros. Não há metas nutricionais, cálculo automático de calorias por alimento ou orientação médica. As calorias são informadas manualmente.
 
-## 10. Referências e uso de IA
+## 9. Referências e uso de IA
 
 - Enunciado Operação Deploy, Profa. Eduarda Maganha de Almeida.
 - Node.js: https://nodejs.org/api/test.html
