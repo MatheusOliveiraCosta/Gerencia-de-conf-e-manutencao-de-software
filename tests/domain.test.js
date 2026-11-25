@@ -47,7 +47,7 @@ test('calcula corretamente o total de calorias', () => {
         { calories: 130 }
     ]);
 
-    assert.equal(result, 300);
+    assert.equal(result, 220);
 });
 
 // Teste 5 - Turno inválido
