@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f8f3"><title>DietLife | Diário alimentar</title><link rel="stylesheet" href="/css/style.css"><script type="module" src="/js/app.js"></script></head>
+<body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">✳</span>Diet<span>Life</span></a><div class="account"><span id="account-status" class="status">Modo demonstração local</span><button id="open-account" class="button secondary">Entrar</button><button id="logout" class="button secondary" hidden>Sair</button></div></div></header>
+<main class="container">
+  <section class="intro"><div><p class="eyebrow">SEU DIÁRIO ALIMENTAR</p><h1>Cuide do seu dia<span>.</span></h1><p>Registre suas refeições e acompanhe suas calorias de forma simples.</p></div><label class="date-label">Data do diário<input id="day" type="date" required></label></section>
+  <section class="summary" aria-label="Resumo diário"><div><p>Calorias consumidas</p><strong id="total">0</strong> <span>kcal</span><small>Somatório dos alimentos registrados no dia.</small></div><div class="summary-side"><p>Alimentos registrados</p><strong id="count">0</strong><small>Distribuídos em quatro turnos.</small></div><div class="decor" aria-hidden="true">✳</div></section>
+  <div class="section-heading"><div><h2>Minhas refeições</h2><p>Organize os alimentos por momento do dia.</p></div><button class="button primary" id="new-meal">+ Adicionar alimento</button></div>
+  <section id="meals" class="meal-grid" aria-label="Refeições"></section>
+  <p id="notice" role="status" class="notice"></p>
+  <footer>DietLife • Projeto acadêmico de Gerência de Configuração e Manutenção de Software</footer>
+</main>
+<dialog id="meal-dialog"><form id="meal-form"><div class="dialog-head"><h2 id="meal-title">Adicionar alimento</h2><button type="button" class="icon-button" id="close-meal" aria-label="Fechar">×</button></div><label>Refeição<select id="period" required></select></label><label>Alimento<input id="food" maxlength="100" placeholder="Ex.: arroz" required></label><label>Calorias (kcal)<input id="calories" type="number" min="0" max="10000" step="0.01" placeholder="Ex.: 130" required></label><p id="meal-error" class="error" role="alert"></p><button class="button primary full" type="submit">Salvar alimento</button></form></dialog>
+<dialog id="account-dialog"><form id="account-form"><div class="dialog-head"><h2>Acesse sua conta</h2><button type="button" class="icon-button" id="close-account" aria-label="Fechar">×</button></div><p class="muted">Autenticação ainda em desenvolvimento nesta base.</p><label>E-mail<input id="email" type="email" autocomplete="email" required></label><label>Senha<input id="password" type="password" minlength="6" autocomplete="current-password" required></label><p id="auth-message" class="error" role="alert"></p><button class="button primary full" value="signin" type="submit">Entrar</button><button class="button secondary full" value="signup" type="submit">Criar conta</button></form></dialog>
+<noscript>Ative o JavaScript para utilizar o DietLife.</noscript>
+</body></html>
