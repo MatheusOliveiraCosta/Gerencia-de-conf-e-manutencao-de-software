@@ -6,15 +6,22 @@ Sistema web de diário alimentar para registrar alimentos e calorias em quatro t
 
 **Entrega:** 25/11/2026, até 21h30 (prazo interno informado pela equipe). Apresentação de até 12 minutos. Confirmar aprovação da ideia própria com a professora.
 
-**Estado inicial:** este repositório contém uma base funcional, não o trabalho final. O modo demonstração usa armazenamento local, sem autenticação real. Não declare que uma tarefa está pronta até executá-la e registrar evidência.
+**Estado atual (25/11/2026):** cinco testes unitários, build e pipeline CI/CD já executados com sucesso; a publicação inicial foi realizada na Vercel (execução #12, commit `ef9ae19`). A falha proposital e a correção foram relatadas pelo líder; falta registrar/confirmar as respectivas execuções e a recuperação. As entregas de autenticação e edição/exclusão ainda precisam ser verificadas na versão integrada. Não declare uma tarefa concluída sem evidências.
+
+**Repositório:** https://github.com/MatheusOliveiraCosta/Gerencia-de-conf-e-manutencao-de-software  
+**Aplicação publicada:** https://dietlife-xi.vercel.app/  
+**Ações do pipeline:** https://github.com/MatheusOliveiraCosta/Gerencia-de-conf-e-manutencao-de-software/actions
+
+**Matheus de Jesus:** sua nova tarefa é exclusivamente complementar os testes da API. Vá diretamente à [seção 5.5](#55-matheus-de-jesus--testes-de-integracao-da-api). Não refaça os testes unitários nem o CI/CD já implementados.
 
 ## 1. Integrantes e responsabilidades
 
 | Integrante | Papel principal | Branch | Arquivos sob responsabilidade |
 |---|---|---|---|
-| Matheus Costa | Líder de integração, testes automatizados e engenheiro de pipeline | `feat/tests` e `feat/ci-cd` | `tests/`, `.github/workflows/ci-cd.yml`, `vercel.json`, configuração GitHub/Vercel, integração |
+| Matheus Costa | Líder de integração, testes unitários e engenheiro de pipeline | `feat/tests`, `feat/ci-cd`, `feat/deploy-vercel` | `tests/domain.test.js`, `.github/workflows/ci-cd.yml`, `vercel.json`, configuração GitHub/Vercel, integração |
 | Alexandre de Lucas | Backend e autenticação | `feat/backend-auth` | `src/js/auth.js`, `src/js/storage.js`, `src/js/account-ui.js`, `supabase/`, configuração pública do cliente |
 | Camille Dal´ Lin | Frontend e funcionalidades | `feat/meal-crud` | `src/js/app.js`, `src/index.html`, `src/css/style.css` |
+| Matheus de Jesus | Testes de integração da API | `feat/integration-tests` | `tests/api.test.js` (novo arquivo) |
 | Nelson Meirelles da Costa Junior | Documentação e evidências | `docs/` | `docs/`, checklist de uso, capturas, PDF técnico com ajuda da equipe |
 
 Matheus Costa revisa e integra todos os PRs e atualiza este README com os links e resultados. Alexandre e Camille combinam alterações na interface da conta: Camille é responsável pelo HTML; Alexandre pode solicitar a remoção do texto provisório após validar a autenticação. Não modifiquem arquivos atribuídos aos demais sem alinhamento. Todos devem saber explicar o projeto.
@@ -25,8 +32,8 @@ Matheus Costa revisa e integra todos os PRs e atualiza este README com os links 
 - Node.js 22: servidor HTTP local, build e testes nativos (`node:test`).
 - Vercel Functions: API `POST /api/validate-meal` (validação de entrada no servidor).
 - Supabase Auth + PostgreSQL (planejado, ainda não conectado): autenticação e persistência por usuário; RLS protege os registros.
-- GitHub e GitHub Actions: versionamento e automação CI/CD (a implementar).
-- Vercel: hospedagem planejada, publicação por CLI disparada pelo pipeline aprovado.
+- GitHub e GitHub Actions: versionamento e automação CI/CD (já configurados).
+- Vercel: hospedagem e publicação por CLI após aprovação do pipeline na main.
 
 ```text
 Navegador (HTML/CSS/JS)
@@ -68,9 +75,10 @@ O build copia os arquivos estáticos de `src/` para `dist/`. `api/` permanece na
 - [x] Formulário visual de login/cadastro, sem autenticação efetiva.
 - [ ] Login, cadastro, logout e isolamento real de registros por usuário.
 - [ ] Edição e exclusão disponíveis na interface (adaptador local já oferece as operações).
-- [ ] Três ou mais testes automatizados reais (há um teste de exemplo).
-- [ ] Pipeline CI/CD executado no GitHub e publicação na Vercel.
-- [ ] Falha, bloqueio, correção e evidências.
+- [x] Cinco testes unitários executados com sucesso.
+- [ ] Três testes adicionais de integração da API — Matheus de Jesus.
+- [x] Pipeline CI/CD executado no GitHub e publicação na Vercel (execução #12).
+- [ ] Falha e correção relatadas; confirmar bloqueio e recuperação no Actions e registrar evidências.
 - [ ] PDF técnico final e links da entrega.
 
 ### Contrato para desenvolvimento paralelo
@@ -89,26 +97,25 @@ Cada item de `meals` usa o formato `{ id, name, calories, period, date }`. No ba
 
 ## 4. Fluxo de Git — obrigatório para todos
 
-Matheus Costa cria um repositório GitHub vazio, adiciona os integrantes como colaboradores, extrai esta pasta e executa (substituir URL):
+O repositório já existe. Matheus Costa deve conferir se os integrantes têm acesso de colaborador.
+
+Demais integrantes: se ainda não clonaram o projeto, executem:
 
 ```bash
-git init
-git add .
-git commit -m "chore: inicia base do DietLife"
-git branch -M main
-git remote add origin URL_DO_REPOSITORIO
-git push -u origin main
+git clone https://github.com/MatheusOliveiraCosta/Gerencia-de-conf-e-manutencao-de-software.git
+cd Gerencia-de-conf-e-manutencao-de-software
 ```
 
-Demais integrantes: clonar o repositório e abrir uma branch própria; substituir `MINHA_BRANCH` pelo nome da seção 1.
+Se já clonaram, abram a pasta existente e não clonem novamente. Com o diretório de trabalho limpo, atualizem a main e criem sua branch (substituam `MINHA_BRANCH` pelo nome da seção 1):
 
 ```bash
-git clone URL_DO_REPOSITORIO
-cd DietLife
+git switch main
+git pull origin main
 git switch -c MINHA_BRANCH
 npm ci
-npm run dev
 ```
+
+Se a branch já existir, usem `git switch MINHA_BRANCH` em vez de recriá-la. Para iniciar o sistema localmente, `npm run dev`.
 
 Ao concluir uma pequena entrega:
 
@@ -119,21 +126,21 @@ git commit -m "feat: descreva a alteração"
 git push -u origin MINHA_BRANCH
 ```
 
-Abra um Pull Request para `main`. Não faça push diretamente na `main` durante o desenvolvimento normal. Não faça `git add .` indiscriminadamente se houver segredos. Matheus verifica os PRs, solicita correções e integra. Se precisar atualizar a branch: `git fetch origin` e `git merge origin/main`, resolvendo conflitos com o responsável. O PR de testes de Matheus Costa deve ser integrado antes da configuração final do pipeline e da demonstração de falha. Utilize commits separados para testes e CI/CD. Proteção da main com status check é recomendada, quando disponível no plano/repositório.
+Abra um Pull Request para `main`. Não faça push diretamente na `main` durante o desenvolvimento normal. Não faça `git add .` indiscriminadamente se houver segredos. Matheus verifica os PRs, solicita correções e integra. Se precisar atualizar a branch: `git fetch origin` e `git merge origin/main`, resolvendo conflitos com o responsável. Os testes unitários e o CI/CD já foram integrados; mantenham os commits de novas tarefas separados. Proteção da main com status check é recomendada, quando disponível no plano/repositório.
 
 ## 5. Tarefas e prompts para copiar e colar na IA
 
-Abra o repositório em VS Code e use sua IA de programação. Cole apenas o prompt do seu papel, com o projeto aberto. Matheus Costa possui dois prompts: testes e CI/CD; execute-os nessa ordem, em branches separadas. Se a IA não tiver acesso ao repositório, envie o código dos arquivos atribuídos. Revise tudo, rode os comandos, faça commits próprios e não aceite alteração em arquivos de terceiros sem combinar. Não envie senhas/tokens à IA.
+Abra o repositório em VS Code e use sua IA de programação. Cole apenas o prompt do seu papel, com o projeto aberto. Os prompts originais de Matheus Costa ficam como referência histórica, pois os testes unitários e o pipeline já foram implementados. Matheus de Jesus deve usar apenas a seção 5.5. Se a IA não tiver acesso ao repositório, envie o código dos arquivos atribuídos. Revise tudo, rode os comandos, faça commits próprios e não aceite alteração em arquivos de terceiros sem combinar. Não envie senhas/tokens à IA.
 
 ### 5.1 Matheus Costa — integração, testes automatizados, CI/CD e Vercel
 
-Execute primeiro a tarefa de testes na branch `feat/tests`, integre-a à `main` e crie `feat/ci-cd` a partir da `main` atualizada. Os colegas podem trabalhar em paralelo.
+Os testes unitários e o CI/CD já foram integrados à `main`. Os prompts abaixo registram o planejamento original e não precisam ser executados novamente. O foco agora é revisar PRs, verificar a recuperação e concluir a entrega.
 
 #### 5.1.1 Integração, CI/CD e Vercel
 
 - [ ] Criar repositório, convidar equipe e enviar a base.
-- [ ] Criar workflow com build, testes, artefato e publicação condicionada ao sucesso.
-- [ ] Criar projeto Vercel e configurar os secrets no GitHub.
+- [x] Criar workflow com build, testes, artefato e publicação condicionada ao sucesso.
+- [x] Criar projeto Vercel e configurar os secrets no GitHub.
 - [ ] Integrar os PRs e demonstrar falha, bloqueio e recuperação dos testes automatizados.
 - [ ] Registrar versão publicada, link, SHA e execuções; conferir entrega final.
 
@@ -148,9 +155,9 @@ Crie .github/workflows/ci-cd.yml usando Node.js 22, npm ci, npm run build e npm 
 
 #### 5.1.2 Matheus Costa — testes automatizados (`feat/tests`)
 
-- [ ] Ampliar os testes para pelo menos três (ideal: cinco ou mais).
-- [ ] Cobrir comportamentos reais com `node:test` e `assert/strict`.
-- [ ] Rodar `npm test` e registrar resultados.
+- [x] Ampliar os testes para cinco.
+- [x] Cobrir comportamentos reais com `node:test` e `assert/strict`.
+- [x] Rodar `npm test` (cinco aprovados); encaminhar evidência ao relatório.
 - [ ] Simular uma regressão e comprovar bloqueio/recuperação.
 
 **Prompt:**
@@ -204,6 +211,76 @@ Não precisa programar. Sua tarefa é conferir a aplicação, tirar prints e org
 Sou Nelson e minha tarefa no DietLife é simples: documentação e evidências, sem programar. Leia o README e docs/RELATORIO-TEMPLATE.md. Ajude-me passo a passo a abrir a aplicação, cadastrar banana com 90 kcal e arroz com 130 kcal, conferir 220 kcal, testar valor negativo e persistência, editar/excluir quando a função estiver pronta. Crie um checklist manual para eu preencher com resultado real. Explique como tirar prints no Windows, nomeá-los e salvar em docs/evidencias. Ajude a organizar o documento técnico de acordo com o modelo e diga exatamente quais informações e capturas preciso pedir a cada colega. Use somente os resultados e imagens que eu fornecer, marque informações ausentes como pendentes e não invente execução do pipeline ou publicação. Explique como exportar o documento para PDF e conferir os links. Não altere código, testes, pipeline ou README principal.
 ```
 
+### 5.5 Matheus de Jesus — testes de integração da API
+
+**Tempo estimado: 40–50 minutos.** Não precisa configurar Supabase, Vercel nem GitHub Actions. A API de validação já existe; você vai verificar se ela responde corretamente a requisições HTTP. Matheus Costa já criou cinco testes unitários, então não repita o trabalho dele.
+
+#### Passo 1 — Preparar sua branch
+
+Se ainda não clonou, siga os comandos da seção 4. Abra o projeto no VS Code. Com o terminal na raiz do repositório e sem alterações pendentes:
+
+```bash
+git switch main
+git pull origin main
+git switch -c feat/integration-tests
+npm ci
+npm test
+```
+
+Se a branch já existir, use `git switch feat/integration-tests`. Confirme que os testes anteriores passam antes de começar. Se houver falha na main, avise Matheus Costa.
+
+#### Passo 2 — Criar os testes
+
+Crie somente `tests/api.test.js`. Leia `api/validate-meal.js`, `scripts/server.js`, `src/js/domain.js` e `package.json`. A rota existente é `POST /api/validate-meal`; ela valida dados, mas não grava refeições no banco.
+
+| Caso | Corpo JSON enviado | Resultado esperado |
+|---|---|---|
+| Alimento válido | `{"name":"Arroz","calories":130,"period":"lunch","date":"2026-11-25"}` | HTTP 200 e `valid: true` |
+| Calorias negativas | Mesmo objeto, com `calories: -10` | HTTP 422, `valid: false` e `errors.calories` |
+| Campo obrigatório ausente | Mesmo objeto, removendo `name` | HTTP 422, `valid: false` e `errors.name` |
+
+**Prompt pronto para copiar e colar na IA (com o projeto aberto):**
+
+```text
+Sou Matheus de Jesus, integrante do DietLife, trabalho da disciplina Gerência de Configuração e Manutenção de Software. Minha tarefa é complementar os cinco testes unitários já existentes com três testes de integração HTTP da API de validação, sem alterar o restante do projeto.
+
+Leia README.md, api/validate-meal.js, scripts/server.js, src/js/domain.js, tests/domain.test.js e package.json. Estou trabalhando na branch feat/integration-tests. Crie apenas tests/api.test.js usando node:test, node:assert/strict e fetch nativo do Node.js 22, sem instalar Jest, Supertest ou outras dependências.
+
+Teste a rota POST /api/validate-meal com Content-Type: application/json. Use o servidor local existente, iniciado pelo próprio teste em processo filho com PORT isolada (por exemplo 3210, se livre), aguarde a inicialização com timeout e encerre o processo em after, inclusive se ocorrer falha. Não dependa de npm run dev iniciado manualmente, Supabase, internet ou da aplicação em produção. Se a porta estiver ocupada, use outra porta livre. Não altere scripts/server.js para realizar os testes sem autorização do líder.
+
+Implemente três casos: (1) alimento válido com name Arroz, calories 130, period lunch e date 2026-11-25 deve retornar HTTP 200 e valid true; (2) mesmo alimento com calories -10 deve retornar HTTP 422, valid false e erro de calories; (3) mesmo alimento sem o campo name deve retornar HTTP 422, valid false e erro de name. Verifique status e corpo JSON. Se o código atual tiver mudado, confira o contrato real e informe divergências ao líder antes de alterar a aplicação. Não invente resultados.
+
+Execute npm test e npm run build. Preserve tests/domain.test.js e todos os demais arquivos. Explique o código e a diferença entre os testes unitários existentes e estes testes de integração HTTP. Mostre os comandos Git para enviar somente tests/api.test.js e abrir um Pull Request para main. A entrega é hoje às 21h30; mantenha a implementação simples.
+```
+
+#### Passo 3 — Conferir e enviar
+
+```bash
+npm test
+npm run build
+git status
+```
+
+Resultado esperado: os cinco testes anteriores e os três novos aprovados (oito no total se não houver outros testes), sem processos do servidor pendurados. Se algum teste falhar, investigue a causa antes de enviar. Não altere a lógica da aplicação para forçar um teste a passar.
+
+```bash
+git add tests/api.test.js
+git commit -m "test: adiciona testes de integracao da API de alimentos"
+git push -u origin feat/integration-tests
+```
+
+Abra o [Pull Request para main](https://github.com/MatheusOliveiraCosta/Gerencia-de-conf-e-manutencao-de-software/pull/new/feat/integration-tests) com o título `test: adiciona testes de integração da API de alimentos`. Descreva os três casos e o resultado observado. Confira o CI verde (o CD deve ficar pulado no PR) e peça ao Matheus Costa para revisar e integrar. Não faça merge por conta própria nem push na main.
+
+#### Checklist de entrega ao grupo
+
+- [ ] `tests/api.test.js` contém os três testes HTTP.
+- [ ] `npm test` e `npm run build` executados com sucesso.
+- [ ] Commit e PR enviados; CI aprovado.
+- [ ] Print do terminal e link do PR enviados a Matheus Costa e Nelson.
+- [ ] Explicação para a apresentação: testes unitários verificam funções isoladas; os novos testes verificam a comunicação HTTP, o status e o corpo da resposta da API.
+
+**Fora do seu escopo:** autenticação, banco de dados, interface, alterações no CI/CD ou simulação de falha (já conduzida por Matheus Costa). Não modifique arquivos dos demais integrantes. Se terminar cedo, ajude Nelson a conferir as evidências dos testes.
+
 ## 6. Demonstração obrigatória do pipeline: sucesso → falha → recuperação
 
 1. Após integrar as funcionalidades/testes e configurar Vercel, obtenha uma execução verde na `main`, gere artefato e publique. Anote o SHA, URL de produção e link do run.
@@ -212,26 +289,30 @@ Sou Nelson e minha tarefa no DietLife é simples: documentação e evidências, 
 4. Reverta somente o commit de regressão (`git revert SHA_DA_REGRESSAO`), integre a correção e capture a nova execução aprovada e a publicação da versão corrigida. Se proteção de branch impedir a regressão na main, use a branch/ambiente de demonstração, não desative a proteção só para criar evidência. Registre a configuração usada e a causalidade.
 5. Confira `/version.json` na publicação e compare com o SHA validado pelo pipeline. Salve links e prints no relatório. Não declare êxito de uma execução que não ocorreu.
 
+## 7. Cronograma sugerido para concluir até 21h30
+
+Horários são metas internas, não resultados já obtidos. Trabalhar em paralelo. Matheus de Jesus deve iniciar a seção 5.5 imediatamente e entregar em aproximadamente 40–50 minutos, antes da integração final. Se começarem mais tarde, comprimam etapas sem eliminar testes, evidências e PDF.
+
 **Corte de escopo:** se autenticação remota não estiver estável até 18h15, use modo local explicitamente rotulado, registre a limitação e priorize CI/CD. A aplicação mínima já permite cadastro/consulta. A professora recomenda armazenamento local, mas o login é um requisito adicional escolhido pela equipe, portanto não o declare cumprido se não estiver pronto.
 
-## 7. Pipeline e links (preencher após execução)
+## 8. Pipeline e links (atualizar na entrega final)
 
-- CI: `npm ci` → `npm run build` → `npm test` → artefato (planejado).
-- CD: job dependente da CI aprovada, preparo do pacote Vercel e publicação controlada na main (planejado).
-- Continuous Delivery mantém uma versão pronta para disponibilização; Continuous Deployment publica automaticamente após passar as verificações. Se configurarem publicação automática na main, terão também implantação contínua.
-- Repositório: PENDENTE.
-- Aplicação publicada: PENDENTE.
-- Execução aprovada: PENDENTE.
+- CI: `npm ci` → `npm run build` → `npm test` → artefato `dietlife-build` (executado).
+- CD: job dependente da CI aprovada, preparo do pacote Vercel e publicação controlada na main por Vercel CLI (executada).
+- Continuous Delivery mantém uma versão pronta para disponibilização; Continuous Deployment publica automaticamente após passar as verificações. Como a publicação na main é automática após as verificações, o projeto também utiliza implantação contínua.
+- Repositório: https://github.com/MatheusOliveiraCosta/Gerencia-de-conf-e-manutencao-de-software
+- Aplicação publicada: https://dietlife-xi.vercel.app/
+- Execução aprovada: #12, commit `ef9ae19` (CI e CD aprovados). Histórico: https://github.com/MatheusOliveiraCosta/Gerencia-de-conf-e-manutencao-de-software/actions
 - Execução reprovada e CD bloqueado: PENDENTE.
 - Execução recuperada: PENDENTE.
-- SHA publicado: PENDENTE.
+- SHA da publicação confirmada na execução #12: `ef9ae19` (abreviado); atualizar com o SHA completo da entrega final.
 - Documento técnico PDF: PENDENTE.
 
-## 8. Limitações conhecidas da base
+## 9. Limitações conhecidas e verificações pendentes
 
-Não existe autenticação real, não há banco remoto conectado, edição/exclusão ainda não estão disponíveis na interface, existe apenas um teste inicial, não há workflow executável nem publicação confirmada. Os dados de demonstração são locais ao navegador e podem ser apagados pelo usuário. A API valida dados, não grava registros. Não há metas nutricionais, cálculo automático de calorias por alimento ou orientação médica. As calorias são informadas manualmente.
+Na base inicial, não existia autenticação real nem banco remoto conectado, e edição/exclusão não estavam disponíveis na interface. Confirmar a implementação dessas funções após integrar os PRs de Alexandre e Camille. Os cinco testes unitários e o CI/CD já foram executados; os testes de integração HTTP adicionais ainda estão pendentes. Os dados de demonstração são locais ao navegador e podem ser apagados pelo usuário. A API valida dados, não grava registros. Não há metas nutricionais, cálculo automático de calorias por alimento ou orientação médica. As calorias são informadas manualmente.
 
-## 9. Referências e uso de IA
+## 10. Referências e uso de IA
 
 - Enunciado Operação Deploy, Profa. Eduarda Maganha de Almeida.
 - Node.js: https://nodejs.org/api/test.html
