@@ -15,7 +15,7 @@ Os testes verificam:
 A execução dos testes foi realizada utilizando o comando `npm test`, apresentando cinco testes aprovados e nenhuma falha.
 
 **Evidência 1 – Execução dos testes e build local:**  
-![Execução dos testes e build local](evidencias/01-testes-e-build-local.png)
+![Execução dos testes e build local](evidencias/01-testes-e-build-local.png.jpeg)
 
 ---
 
@@ -26,7 +26,7 @@ Os testes automatizados foram implementados em uma branch específica e posterio
 Após a revisão e integração, as alterações passaram a compor o código principal do projeto.
 
 **Evidência 2 – Pull Request integrado:**  
-![Pull Request dos testes](evidencias/02-pr-testes-automatizados.png)
+![Pull Request dos testes](evidencias/02-pr-testes-automatizados.png.jpeg)
 
 ---
 
@@ -37,7 +37,7 @@ Foi configurado um pipeline de integração contínua utilizando GitHub Actions,
 Na execução registrada, o build e os testes foram concluídos com sucesso.
 
 **Evidência 3 – Pipeline CI com sucesso:**  
-![Pipeline CI](evidencias/03-pipeline-ci-sucesso.png)
+![Pipeline CI](evidencias/03-pipeline-ci-sucesso.png.jpeg)
 
 ---
 
@@ -48,7 +48,7 @@ O pipeline foi ampliado para incluir a publicação automatizada da aplicação 
 O fluxo realiza a execução do build e dos testes automatizados e, caso essas etapas sejam aprovadas, prossegue para a publicação da aplicação.
 
 **Evidência 4 – Pipeline CI/CD com publicação na Vercel:**  
-![Pipeline CI CD](evidencias/04-pipeline-cicd-vercel.png)
+![Pipeline CI CD](evidencias/04-pipeline-cicd-vercel.png.jpeg)
 
 Aplicação: https://dietlife-xi.vercel.app/
 
@@ -63,7 +63,7 @@ O resultado esperado foi alterado de `220` para `300`, provocando a reprovação
 Com a falha identificada, o pipeline foi interrompido, impedindo que a etapa de publicação na Vercel fosse executada.
 
 **Evidência 5 – Falha proposital no teste:**  
-![Falha no pipeline](evidencias/05-falha-proposital-teste.png)
+![Falha no pipeline](evidencias/05-falha-proposital-teste.png.jpeg)
 
 ---
 
@@ -74,7 +74,7 @@ Após a simulação da falha, o valor esperado foi restaurado para `220`, corrig
 Com a restauração do valor correto, os testes voltaram a ser aprovados e o pipeline pôde prosseguir normalmente, permitindo a execução da etapa de publicação.
 
 **Evidência 6 – Recuperação do pipeline:**  
-![Recuperação do pipeline](evidencias/06-recuperacao-pipeline.png)
+![Recuperação do pipeline](evidencias/06-recuperacao-pipeline.png.jpeg)
 
 ---
 
